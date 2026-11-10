@@ -1,3 +1,4 @@
+
 from datetime import datetime
 
 from flask import Flask, render_template, request
@@ -17,14 +18,22 @@ def salam_waktu(jam):
 
 @app.route("/", methods=["GET", "POST"])
 def beranda():
-    # Ambil nama hanya setelah formulir dikirim.
     nama = request.form.get("nama", "").strip() if request.method == "POST" else ""
     sekarang = datetime.now()
     waktu_server = sekarang.strftime("%d-%m-%Y %H:%M:%S")
     salam = salam_waktu(sekarang.hour)
+
     return render_template(
-        "index.html", nama=nama, salam=salam, waktu_server=waktu_server
+        "index.html",
+        nama=nama,
+        salam=salam,
+        waktu_server=waktu_server
     )
+
+
+@app.route("/tentang")
+def tentang():
+    return render_template("tentang.html")
 
 
 if __name__ == "__main__":
